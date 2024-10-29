@@ -7,8 +7,8 @@ import Building from "./components/building";
 const App = () => (
   <Provider store={store}>
     <div className="flex">
-      <Building />
       <Controller />
+      <Building /> 
     </div>
   </Provider>
 );

@@ -2,11 +2,11 @@ import { TRUSSTYPE, TRUSSWIDTH, TRUSSLENGTH, TRUSSHEIGHT, LEGTYPE, ROOFPITCH } f
 
 const initialState = {
     trussType: "one",
-    trussWidth: 6,
-    trussLength: 6,
-    trussHeight: 3,
-    legType: "one",
-    roofPitch: 6,
+    trussWidth: 10,
+    trussLength: 10,
+    trussHeight: 4,
+    legType: "Single",
+    roofPitch: 2,
 }
 
 const counterReducer = (state = initialState, action) => {
