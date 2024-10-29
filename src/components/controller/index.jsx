@@ -34,12 +34,12 @@ const Controller = () => {
                 />
                 <Selector
                     title="Leg Type"
-                    item={["one", "two", "three"]}
+                    item={["Single Legs", "Double Legs", "Ladder Legs"]}
                     action="legType"
                 />
                 <Selector
                     title="Roof Pitch"
-                    item={["4/12", "6/12", "8/12", "10/12"]}
+                    item={["2/12", "4/12", "6/12", "8/12", "10/12"]}
                     action="roofPitch"
                 />
             </div>

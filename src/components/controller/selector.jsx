@@ -26,7 +26,7 @@ const Selector = (props) => {
         dispatch(trussHeight(Number(event.target.value)));
         break;
       case 'legType':
-        dispatch(legType(event.target.value));
+        dispatch(legType(event.target.value.split(" ")[0]));
         break;
       case 'roofPitch':
         dispatch(roofPitch(Number(event.target.value.split("/")[0])));

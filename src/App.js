@@ -8,7 +8,7 @@ const App = () => (
   <Provider store={store}>
     <div className="flex">
       <Controller />
-      <Building />
+      <Building /> 
     </div>
   </Provider>
 );
