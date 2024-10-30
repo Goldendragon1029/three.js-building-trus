@@ -1,13 +1,13 @@
 import { OrbitControls } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
-import FrontTruss from "./frontTruss"
+import Truss from "./Truss"
 
 const Building = () => {
     return(
         <>
-            <Canvas style={{width: "100%", height: "100vh"}} shadows camera={{near: 1, far: 70, position: [8, 5, 8]}}>
+            <Canvas style={{width: "100%", height: "100vh"}} shadows camera={{ position: [8, 5, 8]}}>
                 <color attach="background" args={[0xccccff]} />
-                <FrontTruss />
+                <Truss />
                 <directionalLight 
                     position={[20, 10, 10]}
                     intensity={3}
@@ -25,7 +25,10 @@ const Building = () => {
                 <OrbitControls />
                 <fog attach={"fog"} color={"gray"} near={40} far={70} />
                 <axesHelper args={[5]}/>
-                <gridHelper args={[30, 30]}/>
+                <mesh rotation={[ - Math.PI / 2, 0, 0]} receiveShadow>
+                    <planeGeometry args={[200, 200]}/>
+                    <meshStandardMaterial color={'white'} transparent opacity={0.7} roughness={0.4} />
+                </mesh>
             </Canvas>
         </>
     )
