@@ -1,8 +1,9 @@
 import { OrbitControls } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
-import Truss from "./Truss"
 import { useSelector } from "react-redux"
+import Truss from "./Truss"
 import TrussTwo from "./Truss-two"
+import TrussThree from "./Truss-three"
 
 const Building = () => {
     const trussType = useSelector((state) => state.trussType);
@@ -12,6 +13,7 @@ const Building = () => {
                 <color attach="background" args={[0xccccff]} />
                 {trussType === "one" && <Truss />}
                 {trussType === "two" && <TrussTwo />}
+                {trussType === "three" && <TrussThree />}
                 <directionalLight 
                     position={[100, 20, 0]}
                     intensity={2.5}
