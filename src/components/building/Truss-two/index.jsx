@@ -4,6 +4,7 @@ import { Pillar } from "../elements/pillar";
 import { extrudeSettings } from "../units";
 import FrontTruss from "./frontTruss";
 import RoofTruss from "./roofTruss";
+import { useMemo } from "react";
 
 const TrussTwo = () => {
     const trussWidth = useSelector((state) => state.trussWidth);
@@ -15,27 +16,31 @@ const TrussTwo = () => {
     const pillarNumber = Math.ceil(trussLength / pillarDistance);
     const realDistance = (trussLength - (pillarNumber - 1) * pillarWidth) / pillarNumber;
 
+    const Trusses = useMemo(() => {
+        const Truss = [];
+            for (let index = 0; index < pillarNumber + 1; index++) {
+                const moveLength = (realDistance * index + pillarWidth * index);
+                let isFront = true;
+                if (index === 0 || index === pillarNumber) {
+                    isFront = true;
+                } else {
+                    isFront = false;
+                }
+                Truss.push({
+                    moveLength,
+                    isFront
+                });
+            }
+        return Truss
+    }, [pillarNumber, realDistance]);
 
     return (
         <group>
-            {(() => {
-                const pillars = [];
-                for (let index = 0; index < pillarNumber + 1; index++) {
-                    const moveLength = (realDistance * index + pillarWidth * index);
-                    let isFront = true;
-                    if (index === 0 || index === pillarNumber) {
-                        isFront = true;
-                    } else {
-                        isFront = false;
-                    }
-                    pillars.push(
-                        <group position={[ - moveLength, 0, 0]}>
-                            <FrontTruss isFront={isFront}/>
-                        </group>               
-                    );
-                }
-                return pillars;
-            })()}
+            {Trusses.map((truss) =>
+                <group position={[ - truss.moveLength, 0, 0]}>
+                    <FrontTruss isFront={truss.isFront}/>
+                </group> 
+            )}
 
             <mesh name="RightBaseRail" position={[ - trussLength / 2 - pillarWidth, trussHeight, - trussWidth / 2]} rotation={[0, Math.PI / 2, 0]}>
                     <extrudeGeometry args={[Pillar(pillarWidth), extrudeSettings(trussLength + 2 * pillarWidth)]} />
