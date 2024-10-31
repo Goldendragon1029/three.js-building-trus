@@ -6,7 +6,7 @@ import FrontTruss from "./frontTruss";
 import RoofTruss from "./roofTruss";
 import { useMemo } from "react";
 
-const TrussTwo = () => {
+const TrussThree = () => {
     const trussWidth = useSelector((state) => state.trussWidth);
     const trussLength = useSelector((state) => state.trussLength);
     const trussHeight = useSelector((state) => state.trussHeight);
@@ -54,4 +54,4 @@ const TrussTwo = () => {
         </group>
     )
 }
-export default TrussTwo
+export default TrussThree
