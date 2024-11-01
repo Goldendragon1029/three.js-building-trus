@@ -56,8 +56,6 @@ const FrontTruss = (props) => {
                     extrudeLength: complex
                 });
             } else {
-                // const x = trussWidth / 2 / Math.cos( Math.atan(roofPitch / 12)) - topRoofRailLength * index;
-                // const y = downRoofPillarPosition * Math.cos( 1 / Math.atan(roofPitch / 12) );
                 let moveLength = 0;
                 let extrudeLength = 0;
                 let rotationAngle = 0;
@@ -87,11 +85,8 @@ const FrontTruss = (props) => {
                 });
             }
         }
-        console.log("railNumber=", railNumber);
         return topRoofRails;
     }, [complex, roofPitch, trussWidth]);
-    
-
 
     return (
         <group position={[trussLength / 2, 0, 0]}>
