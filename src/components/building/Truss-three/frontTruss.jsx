@@ -54,7 +54,7 @@ const FrontTruss = () => {
         return topRoofRails;
     }, [complex, roofPitch, trussWidth]);
 
-    const InstancedExtrude = () => {
+    const newRoofRail = useMemo(() => {
         const roofRails = [];
         const alpha = Math.atan(roofPitch / 12);
         const position_y = trussHeight + (trussWidth / 2) * roofPitch / 12 - topSloperailPosition - downRoofPillarPosition + pillarWidth * Math.sin(alpha * 2);
@@ -67,21 +67,13 @@ const FrontTruss = () => {
         // ref_count = count / 2;
         const real_distance_a = (triangle_a - init_a) / count;
         const real_distance_b = (triangle_b - init_b) / count;
-
-
-        // const material = new THREE.MeshStandardMaterial({color: 0x666666, metalness: 5, roughness: 1});
-        // const material = new THREE.MeshStandardMaterial({ color: 'orange' });
-        // const geometry = new THREE.BoxGeometry(1, 1, 1);
         if (ref_newRoofRail.current) {
             
             for (let index = 2; index < count; index += 2) {
-                console.log("ttt");
-                
                 const a = init_a + real_distance_a * (index + 2);
                 const b = init_b + real_distance_b * (index - 1);
                 const c = Math.sqrt(a ** 2 + b ** 2 - 2 * a * b * Math.cos(alpha));
                 const beta = Math.asin(Math.sin(alpha) * b / c);
-                const geometry = new THREE.ExtrudeGeometry(Pillar(pillarWidth), extrudeSettings(2));
         
                 // roofRails.push({
                 //     position_y: position_y,
@@ -93,52 +85,41 @@ const FrontTruss = () => {
                 obj_newRoofRail.rotation.set( - beta, 0, 0);
                 obj_newRoofRail.scale.setScalar(1);
                 obj_newRoofRail.updateMatrix();
-
                 ref_newRoofRail.current.setMatrixAt((index - 2) / 2, obj_newRoofRail.matrix);
-                // ref_newRoofRail.current.geometry.dispose();
-                // ref_newRoofRail.current.geometry = geometry;
+    
             }
-
-            console.log("aaa")
     
             ref_newRoofRail.current.instanceMatrix.needsUpdate = true;
         }
 
-        return (
-            <instancedMesh ref={ref_newRoofRail} args={[null, null, 7]} frustumCulled={false}>
-                <extrudeGeometry args={[Pillar(pillarWidth), extrudeSettings(3)]} />
-                <meshStandardMaterial color={0x666666} side={THREE.DoubleSide} metalness={5} roughness={1} />
-            </instancedMesh>
-        )
-
         
-        // for (let index = 2; index < count - 1; index += 2) {
-        //     const a = init_a + real_distance_a * (index);
-        //     const b = init_b + real_distance_b * (index - 1);
-        //     const c = Math.sqrt(a ** 2 + b ** 2 - 2 * a * b * Math.cos(alpha));
-        //     const beta = Math.asin(Math.sin(alpha) * b / c);
+        for (let index = 2; index < count - 1; index += 2) {
+            const a = init_a + real_distance_a * (index);
+            const b = init_b + real_distance_b * (index - 1);
+            const c = Math.sqrt(a ** 2 + b ** 2 - 2 * a * b * Math.cos(alpha));
+            const beta = Math.asin(Math.sin(alpha) * b / c);
             
-        //     roofRails.push({
-        //         position_y: position_y,
-        //         position_z: (triangle_a - a),
-        //         extrudeLength: c,
-        //         angle: beta
-        //     })
-        // }
+            roofRails.push({
+                position_y: position_y,
+                position_z: (triangle_a - a),
+                extrudeLength: c,
+                angle: beta
+            })
+        }
         
-        // const a = init_a + real_distance_a * 2;
-        // const b = init_b - pillarWidth * (1 + Math.sin(alpha));
-        // const c = Math.sqrt(a ** 2 + b ** 2 - 2 * a * b * Math.cos(alpha));
-        // const beta = Math.asin(Math.sin(alpha) * b / c);
+        const a = init_a + real_distance_a * 2;
+        const b = init_b - pillarWidth * (1 + Math.sin(alpha));
+        const c = Math.sqrt(a ** 2 + b ** 2 - 2 * a * b * Math.cos(alpha));
+        const beta = Math.asin(Math.sin(alpha) * b / c);
 
-        // roofRails.push({
-        //     position_y: position_y,
-        //     position_z: (triangle_a - a),
-        //     extrudeLength: c,
-        //     angle: beta
-        // })
-        // return roofRails;
-    }
+        roofRails.push({
+            position_y: position_y,
+            position_z: (triangle_a - a),
+            extrudeLength: c,
+            angle: beta
+        })
+        return roofRails;
+    }, [obj_newRoofRail, roofPitch, topSloperailPosition, trussHeight, trussWidth]);
 
     return (
         <group position={[trussLength / 2, 0, 0]}>
@@ -242,14 +223,12 @@ const FrontTruss = () => {
                 </group>
             )} */}
 
-            {/* <instancedMesh ref={ref_newRoofRail} args={[null, null, ref_count]} frustumCulled={false}>
+            <instancedMesh ref={ref_newRoofRail} args={[null, null,7]} frustumCulled={false}>
                 <extrudeGeometry args={[Pillar(pillarWidth), extrudeSettings(3)]} />
                 <meshStandardMaterial color={0x666666} side={THREE.DoubleSide} metalness={5} roughness={1} />
-            </instancedMesh> */}
+            </instancedMesh>
 
-            <InstancedExtrude />
-
-            {/* <group position={[pillarWidth, 0, 0]} rotation={[0, Math.PI, 0]}>
+            <group position={[pillarWidth, 0, 0]} rotation={[0, Math.PI, 0]}>
                 {newRoofRail.map((roofRail) => 
                         <group position={[0, roofRail.position_y, roofRail.position_z]}>
                             <mesh rotation={[ - roofRail.angle, 0, 0]}>
@@ -258,7 +237,7 @@ const FrontTruss = () => {
                             </mesh>
                         </group>
                 )}
-            </group> */}
+            </group>
             <group position={[0, trussHeight + (trussWidth / 2) * roofPitch / 12 - topSloperailPosition - downRoofPillarPosition + pillarWidth * Math.sin(Math.atan(roofPitch / 12) * 2), 0]}>
                 <mesh position={[0, 0, pillarWidth / 2]} rotation={[ - Math.PI / 2, 0, 0]}>
                     <extrudeGeometry args={[Pillar(pillarWidth), extrudeSettings(trussWidth / 2 * roofPitch / 12  + pillarWidth - ((trussWidth / 2) * roofPitch / 12 - topSloperailPosition - downRoofPillarPosition + pillarWidth * Math.sin(Math.atan(roofPitch / 12) * 2)))]} />
