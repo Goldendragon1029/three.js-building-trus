@@ -21,9 +21,9 @@ const FrontTruss = () => {
     const topSloperailPosition = ((Math.ceil(railNumber / 2) - 1) * topRoofRailLength - downRoofPillarPosition * Math.sin(Math.atan(roofPitch / 12))) * Math.sin(Math.atan(roofPitch / 12));
     const topSloperailWidth = topSloperailPosition * 12 / roofPitch * 2;
 
-    const ref_newRoofRail = useRef();
-    const obj_newRoofRail = new THREE.Object3D();
-    let ref_count = 10;
+    // const ref_newRoofRail = useRef();
+    // const obj_newRoofRail = new THREE.Object3D();
+    // let ref_count = 10;
 
     const topRoofRailMoves = useMemo(() => {
         const topRoofRailLength = complex * Math.cos(Math.PI / 6);
@@ -67,7 +67,7 @@ const FrontTruss = () => {
         // ref_count = count / 2;
         const real_distance_a = (triangle_a - init_a) / count;
         const real_distance_b = (triangle_b - init_b) / count;
-        if (ref_newRoofRail.current) {
+        // if (ref_newRoofRail.current) {
             
             for (let index = 2; index < count; index += 2) {
                 const a = init_a + real_distance_a * (index + 2);
@@ -75,22 +75,22 @@ const FrontTruss = () => {
                 const c = Math.sqrt(a ** 2 + b ** 2 - 2 * a * b * Math.cos(alpha));
                 const beta = Math.asin(Math.sin(alpha) * b / c);
         
-                // roofRails.push({
-                //     position_y: position_y,
-                //     position_z: (triangle_a - a),
-                //     extrudeLength: c,
-                //     angle: beta
-                // })
-                obj_newRoofRail.position.set(0, position_y, triangle_a - a);
-                obj_newRoofRail.rotation.set( - beta, 0, 0);
-                obj_newRoofRail.scale.setScalar(1);
-                obj_newRoofRail.updateMatrix();
-                ref_newRoofRail.current.setMatrixAt((index - 2) / 2, obj_newRoofRail.matrix);
+                roofRails.push({
+                    position_y: position_y,
+                    position_z: (triangle_a - a),
+                    extrudeLength: c,
+                    angle: beta
+                })
+                // obj_newRoofRail.position.set(0, position_y, triangle_a - a);
+                // obj_newRoofRail.rotation.set( - beta, 0, 0);
+                // obj_newRoofRail.scale.setScalar(1);
+                // obj_newRoofRail.updateMatrix();
+                // ref_newRoofRail.current.setMatrixAt((index - 2) / 2, obj_newRoofRail.matrix);
     
             }
     
-            ref_newRoofRail.current.instanceMatrix.needsUpdate = true;
-        }
+            // ref_newRoofRail.current.instanceMatrix.needsUpdate = true;
+        // }
 
         
         for (let index = 2; index < count - 1; index += 2) {
@@ -119,7 +119,7 @@ const FrontTruss = () => {
             angle: beta
         })
         return roofRails;
-    }, [obj_newRoofRail, roofPitch, topSloperailPosition, trussHeight, trussWidth]);
+    }, [roofPitch, topSloperailPosition, trussHeight, trussWidth]);
 
     return (
         <group position={[trussLength / 2, 0, 0]}>
@@ -214,19 +214,19 @@ const FrontTruss = () => {
                     </group>
                 </group>
             )}
-            {/* {newRoofRail.map((roofRail) => 
+            {newRoofRail.map((roofRail) => 
                 <group position={[0, roofRail.position_y, roofRail.position_z]}>
                     <mesh rotation={[ - roofRail.angle, 0, 0]}>
                         <extrudeGeometry args={[Pillar(pillarWidth), extrudeSettings(roofRail.extrudeLength)]} />
                         <meshStandardMaterial color={0x666666} side={THREE.DoubleSide} metalness={5} roughness={1} />
                     </mesh>
                 </group>
-            )} */}
+            )}
 
-            <instancedMesh ref={ref_newRoofRail} args={[null, null,7]} frustumCulled={false}>
+            {/* <instancedMesh ref={ref_newRoofRail} args={[null, null,7]} frustumCulled={false}>
                 <extrudeGeometry args={[Pillar(pillarWidth), extrudeSettings(3)]} />
                 <meshStandardMaterial color={0x666666} side={THREE.DoubleSide} metalness={5} roughness={1} />
-            </instancedMesh>
+            </instancedMesh> */}
 
             <group position={[pillarWidth, 0, 0]} rotation={[0, Math.PI, 0]}>
                 {newRoofRail.map((roofRail) => 
