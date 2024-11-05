@@ -9,7 +9,6 @@ import { trussType, trussWidth, trussLength, trussHeight, legType, roofPitch } f
 const Selector = (props) => {
   const [settingType, setSettingType] = React.useState(props.item[0]);
   const dispatch = useDispatch();
-  // console.log("props=", props.item)
   const handleChange = (event) => {
     setSettingType(event.target.value);
     switch (props.action) {
