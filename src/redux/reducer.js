@@ -1,9 +1,9 @@
 import { TRUSSTYPE, TRUSSWIDTH, TRUSSLENGTH, TRUSSHEIGHT, LEGTYPE, ROOFPITCH } from "./action";
 
 const initialState = {
-    trussType: "one",
-    trussWidth: 10,
-    trussLength: 10,
+    trussType: "Standard",
+    trussWidth: 25,
+    trussLength: 25,
     trussHeight: 4,
     legType: "Single",
     roofPitch: 2,

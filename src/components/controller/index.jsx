@@ -13,28 +13,28 @@ const Controller = () => {
             <div className={`bg-white mt-20 z-50 min-h-full tablet:min-w-350 tablet:block large:min-w-450 min-w-300 ${handleShow ? 'block fixed' : 'hidden'}`}>
                 <h1 className="mb-10 text-center text-gray text-30">Setting</h1>
                 <Selector
-                    title="Truss Type"
-                    item={["one", "two", "three"]}
-                    action="trussType"
-                />
-                <Selector
-                    title="Truss Width"
-                    item={[10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 35, 40, 45, 50]}
+                    title="Building Width"
+                    item={[25, 30, 35, 40, 45, 50, 60]}
                     action="trussWidth"
                 />
                 <Selector
-                    title="Truss Length"
-                    item={[10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 35, 40, 45, 50]}
+                    title="Building Length"
+                    item={[25, 30, 35, 40, 45, 50, 60]}
                     action="trussLength"
                 />
                 <Selector
-                    title="Truss Height"
+                    title="Building Height"
                     item={[4, 6, 8, 10]}
                     action="trussHeight"
                 />
                 <Selector
+                    title="Truss Type"
+                    item={["Standard", "CTCT", "CMT"]}
+                    action="trussType"
+                />
+                <Selector
                     title="Roof Pitch"
-                    item={["2/12", "4/12", "6/12", "8/12", "10/12"]}
+                    item={["2/12", "3/12", "4/12", "5/12", "6/12", "8/12"]}
                     action="roofPitch"
                 />
             </div>
