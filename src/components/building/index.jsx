@@ -10,14 +10,13 @@ const Building = () => {
     const trussType = useSelector((state) => state.trussType);
     return(
         <>
-            <Canvas style={{width: "100%", height: "100vh"}} dpr={[1.5, 2]} shadows camera={{position: [20, 10, 4]}}>
-                <Environment backgroundIntensity={3} preset="warehouse" backgroundBlurriness={1} background />
+            <Canvas style={{width: "100%", height: "100vh"}} shadows camera={{position: [20, 10, 4]}}>
+                <Environment backgroundIntensity={0.2} preset="warehouse" backgroundBlurriness={1} background />
                 {trussType === "Standard" && <Standard />}
                 {trussType === "CTCT" && <CTCT />}
                 {trussType === "CMT" && <CMT />}
                 <ambientLight intensity={1.2} />
                 <OrbitControls />
-                <axesHelper args={[5]} />
                 <Ground />
             </Canvas>
         </>
