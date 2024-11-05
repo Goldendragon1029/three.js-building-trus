@@ -55,6 +55,10 @@ const Ground = () => {
             <mesh geometry={CSGBaseModel.geometry}>
                 <meshLambertMaterial map={groundTexture} bumpMap={groundTexture} bumpScale={0.2} side={THREE.DoubleSide} toneMapped={false} />
             </mesh>
+            <mesh rotation={[ - Math.PI / 2, 0, Math.PI / 2]}>
+                <planeGeometry args={[trussWidth + 1.5, trussLength + 1.5]} />
+                <meshLambertMaterial map={groundTexture} bumpMap={groundTexture} bumpScale={0.2} toneMapped={false} />
+            </mesh>
         </group>
     )
 }
